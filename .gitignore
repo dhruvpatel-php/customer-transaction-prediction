@@ -1,0 +1,8 @@
+# Ignore dataset and reports
+train(1).csv
+*.csv
+Report_on_Challenges_Faced.md
+
+# Ignore Jupyter checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
