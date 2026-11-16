@@ -1,8 +1,12 @@
-# Ignore dataset and reports
+# Ignore heavy dataset files (>100MB cannot be pushed to GitHub)
 train(1).csv
+train*.csv
 *.csv
-Report_on_Challenges_Faced.md
+!sample_batch.csv
 
-# Ignore Jupyter checkpoints
+# Ignore Jupyter checkpoints & caches
 .ipynb_checkpoints/
 */.ipynb_checkpoints/*
+__pycache__/
+*.py[cod]
+.pytest_cache/
