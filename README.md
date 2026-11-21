@@ -1,4 +1,4 @@
-# 🏦 Customer Transaction Prediction (Santander Banking Benchmark)
+# Customer Transaction Prediction (Santander Banking Benchmark)
 ### Project ID: PRCP-1003 | Live Streamlit Cloud Deployment
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io)
@@ -11,33 +11,33 @@ An enterprise-grade, interactive Machine Learning application built using **Stre
 
 ---
 
-## 🌟 Key Application Features
+## Key Application Features
 
-1. **🔮 Single Customer Propensity Scoring:**
+1. **Single Customer Propensity Scoring:**
    - 1-click Demo presets for both positive (transaction executed) and negative (no transaction) profiles.
    - Interactive sliders for the **Top 10 most influential features** (`var_34`, `var_174`, `var_76`, `var_6`, etc.).
    - Full 200-variable input drawer with automatic row moment calculation (`row_mean`, `row_std`, `row_min`, `row_max`, `row_sum`).
    - Dynamic threshold sensitivity comparator highlighting standard ($\theta = 0.50$) vs cost-optimal ($\theta^* = 0.22$) decisions.
 
-2. **📁 High-Throughput Batch Scoring (CSV Ingestion):**
+2. **High-Throughput Batch Scoring (CSV Ingestion):**
    - Upload customer batch CSV files with anonymized variables.
    - Built-in downloadable `sample_batch.csv` test file for immediate evaluation.
    - Real-time KPI summaries: Total Scored, Predicted Transactions, Propensity Rate %.
    - Interactive propensity probability distribution histogram.
    - Download complete scored reports with predicted probabilities and business action tags.
 
-3. **📊 Model Analytics & Diagnostic Dashboard:**
+3. **Model Analytics & Diagnostic Dashboard:**
    - Benchmark validation ROC-AUC score (**0.8838**).
    - Top 15 most discriminative features by split gain.
    - Interactive Confusion Matrix comparison demonstrating false negative reduction.
    - Cross-paradigm benchmark table (Logistic Regression vs Random Forest vs LightGBM vs XGBoost).
 
-4. **📑 Comprehensive Technical Architecture & Report:**
+4. **Comprehensive Technical Architecture & Report:**
    - Full documentation of data challenges, mathematical justifications, and business recommendations.
 
 ---
 
-## 🔬 Machine Learning Architecture
+## Machine Learning Architecture
 
 - **Dataset Scale:** 200,000 banking instances $\times$ 200 anonymized continuous features (`var_0` to `var_199`).
 - **Feature Engineering:** Horizontal statistical moments synthesized across feature vectors:
@@ -48,7 +48,7 @@ An enterprise-grade, interactive Machine Learning application built using **Stre
 
 ---
 
-## 🚀 Local Installation & Quickstart
+## Local Installation & Quickstart
 
 ### 1. Clone the repository
 ```bash
@@ -80,7 +80,7 @@ The app will launch at `http://localhost:8501`.
 
 ---
 
-## ☁️ Streamlit Community Cloud Deployment Guide
+## Streamlit Community Cloud Deployment Guide
 
 1. Log in to [Streamlit Community Cloud](https://share.streamlit.io).
 2. Click **"New app"**.
@@ -93,7 +93,7 @@ Streamlit Cloud will automatically install dependencies from `requirements.txt` 
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 ├── .streamlit/
@@ -112,5 +112,5 @@ Streamlit Cloud will automatically install dependencies from `requirements.txt` 
 
 ---
 
-## 📜 License
+## License
 This project is developed under the MIT License.

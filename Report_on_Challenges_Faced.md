@@ -249,11 +249,11 @@ Data leakage is the most pervasive flaw in applied machine learning. It occurs w
 
 ```mermaid
 flowchart TD
-    BadHeader["❌ FLAWED PREPROCESSING: DATA LEAKAGE"] --> AllData["Full Dataset (200k Rows)"]
+    BadHeader["FLAWED PREPROCESSING: DATA LEAKAGE"] --> AllData["Full Dataset (200k Rows)"]
     AllData --> FullFit["Fit Scaler on ALL 200k Rows<br/>(Information Leakage)"]
     FullFit --> FlawedSplit["Split into Folds<br/>(Validation Contaminated)"]
 
-    GoodHeader["✅ PRODUCTION STANDARD: STRICT PIPELINE"] --> SplitFirst["Stratified K-Fold Split First"]
+    GoodHeader["PRODUCTION STANDARD: STRICT PIPELINE"] --> SplitFirst["Stratified K-Fold Split First"]
     SplitFirst --> TrainFold["Train Fold (160k Instances)"]
     SplitFirst --> ValFold["Validation Fold (40k Instances)"]
     TrainFold --> FitPipe["Fit Scaler ONLY on Train Split"]
@@ -314,7 +314,7 @@ flowchart TD
     Paradigms --> Linear["Linear Parametric: Logistic Regression<br/>(AUC: 0.86574 - Fast Shadow Benchmark)"]
     Paradigms --> Bagging["Bagging Ensemble: Random Forest<br/>(AUC: 0.78898 - Suboptimal on Diffuse Signal)"]
     Paradigms --> Boosting1["Leaf-Wise Boosting: LightGBM<br/>(AUC: 0.88438 - Production Co-Champion)"]
-    Paradigms --> Boosting2["Depth-Wise Boosting: XGBoost<br/>(AUC: 0.88659 - 🏆 PRODUCTION CHAMPION)"]
+    Paradigms --> Boosting2["Depth-Wise Boosting: XGBoost<br/>(AUC: 0.88659 - PRODUCTION CHAMPION)"]
 ```
 
 ### Architectural Comparison Table

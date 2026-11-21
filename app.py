@@ -12,7 +12,6 @@ import seaborn as sns
 # ==============================================================================
 st.set_page_config(
     page_title="Customer Transaction Predictor | Santander PRCP-1003",
-    page_icon="💳",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -81,7 +80,7 @@ def load_model_artifacts():
     presets_path = "sample_presets.json"
     
     if not os.path.exists(model_path):
-        st.error(f"⚠️ Model file '{model_path}' not found! Run 'python train_model.py' to generate it.")
+        st.error(f"Model file '{model_path}' not found! Run 'python train_model.py' to generate it.")
         st.stop()
         
     artifact = joblib.load(model_path)
@@ -139,15 +138,15 @@ with st.sidebar:
     app_mode = st.radio(
         "Select Workflow:",
         [
-            "🔮 Single Customer Prediction",
-            "📁 Batch CSV Inference",
-            "📊 Model Analytics & ROC-AUC",
-            "📑 Technical Architecture & Report"
+            "Single Customer Prediction",
+            "Batch CSV Inference",
+            "Model Analytics & ROC-AUC",
+            "Technical Architecture & Report"
         ]
     )
     
     st.markdown("---")
-    st.subheader("⚙️ Decision Threshold")
+    st.subheader("Decision Threshold")
     
     st.markdown(
         """
@@ -170,9 +169,9 @@ with st.sidebar:
     )
     
     if abs(threshold - default_optimal_threshold) < 0.02:
-        st.caption(f"🎯 Recommended Cost-Optimal Threshold: **{default_optimal_threshold:.2f}**")
+        st.caption(f"Recommended Cost-Optimal Threshold: **{default_optimal_threshold:.2f}**")
     elif threshold >= 0.50:
-        st.warning("⚠️ Warning: Threshold >= 0.50 prioritizes precision but misses high-value transactions (High False Negative cost).")
+        st.warning("Warning: Threshold >= 0.50 prioritizes precision but misses high-value transactions (High False Negative cost).")
         
     st.markdown("---")
     st.subheader("Model Status")
@@ -185,10 +184,10 @@ with st.sidebar:
 # ==============================================================================
 # 5. TAB 1: SINGLE CUSTOMER PREDICTION
 # ==============================================================================
-if app_mode == "🔮 Single Customer Prediction":
+if app_mode == "Single Customer Prediction":
     st.markdown("""
     <div class="hero-header">
-        <h2 style='margin:0; padding:0; color:#F8FAFC;'>🔮 Customer Transaction Propensity Scoring</h2>
+        <h2 style='margin:0; padding:0; color:#F8FAFC;'>Customer Transaction Propensity Scoring</h2>
         <p style='margin:5px 0 0 0; color:#94A3B8;'>
             Predict whether a specific banking customer will execute a financial transaction using anonymized continuous profile attributes.
         </p>
@@ -215,11 +214,11 @@ if app_mode == "🔮 Single Customer Prediction":
         st.session_state.customer_id = presets_data[preset_choice].get("ID_code", "DEMO_CUST")
         
     # Handle Random Generation
-    if col_random.button("🎲 Generate Random Customer", use_container_width=True):
+    if col_random.button("Generate Random Customer", use_container_width=True):
         np.random.seed()
         st.session_state.customer_features = {f"var_{i}": round(float(np.random.normal(loc=10.0, scale=5.0)), 4) for i in range(200)}
         st.session_state.customer_id = f"RAND_{np.random.randint(10000, 99999)}"
-        st.toast("Random customer profile generated!", icon="🎲")
+        st.toast("Random customer profile generated!")
 
     st.markdown("### Top Influential Feature Adjustments")
     st.markdown(
@@ -243,7 +242,7 @@ if app_mode == "🔮 Single Customer Prediction":
         )
         st.session_state.customer_features[feat_name] = new_val
 
-    with st.expander("🛠️ View / Adjust All 200 Raw Variables"):
+    with st.expander("View / Adjust All 200 Raw Variables"):
         st.caption("Expand to modify any of the full 200 anonymized attributes.")
         all_cols_grid = st.columns(8)
         for i in range(200):
@@ -263,7 +262,7 @@ if app_mode == "🔮 Single Customer Prediction":
     st.markdown("---")
     
     # Run Prediction
-    if st.button("🚀 Calculate Transaction Propensity", type="primary", use_container_width=True):
+    if st.button("Calculate Transaction Propensity", type="primary", use_container_width=True):
         # Convert dictionary to single-row DataFrame
         raw_row_df = pd.DataFrame([st.session_state.customer_features])
         
@@ -295,7 +294,7 @@ if app_mode == "🔮 Single Customer Prediction":
                 st.markdown(
                     f"""
                     <div class="badge-positive" style="font-size:1.1rem; padding:8px 18px; margin-bottom:10px;">
-                        ✅ TRANSACTION LIKELY (Class 1)
+                        TRANSACTION LIKELY (Class 1)
                     </div>
                     <p style="color:#CBD5E1; font-size:0.92rem;">
                         Customer propensity (<b>{probability * 100:.1f}%</b>) exceeds the business cutoff <b>{threshold:.2f}</b>. 
@@ -308,7 +307,7 @@ if app_mode == "🔮 Single Customer Prediction":
                 st.markdown(
                     f"""
                     <div class="badge-negative" style="font-size:1.1rem; padding:8px 18px; margin-bottom:10px;">
-                        ❌ NO TRANSACTION EXPECTED (Class 0)
+                        NO TRANSACTION EXPECTED (Class 0)
                     </div>
                     <p style="color:#CBD5E1; font-size:0.92rem;">
                         Customer propensity (<b>{probability * 100:.1f}%</b>) is below the cutoff <b>{threshold:.2f}</b>. 
@@ -323,7 +322,7 @@ if app_mode == "🔮 Single Customer Prediction":
             st.write(f"• Active Cutoff (θ = {threshold:.2f}): **Class {predicted_class}**")
             st.write(f"• Default Cutoff (θ = 0.50): **Class {default_class}**")
             if predicted_class == 1 and default_class == 0:
-                st.info("💡 **Key Finding:** Under standard 0.50 cutoff, this customer would be missed! Cost-optimal threshold captured this opportunity.")
+                st.info("**Key Finding:** Under standard 0.50 cutoff, this customer would be missed! Cost-optimal threshold captured this opportunity.")
 
         # Show Row-Level Moments
         st.markdown("#### Row-Level Statistical Moments Computed")
@@ -338,10 +337,10 @@ if app_mode == "🔮 Single Customer Prediction":
 # ==============================================================================
 # 6. TAB 2: BATCH CSV INFERENCE
 # ==============================================================================
-elif app_mode == "📁 Batch CSV Inference":
+elif app_mode == "Batch CSV Inference":
     st.markdown("""
     <div class="hero-header">
-        <h2 style='margin:0; padding:0; color:#F8FAFC;'>📁 Batch File Ingestion & Customer Scoring</h2>
+        <h2 style='margin:0; padding:0; color:#F8FAFC;'>Batch File Ingestion & Customer Scoring</h2>
         <p style='margin:5px 0 0 0; color:#94A3B8;'>
             Upload high-volume customer CSV datasets to execute rapid vector inference and download scored propensity reports.
         </p>
@@ -356,7 +355,7 @@ elif app_mode == "📁 Batch CSV Inference":
         if os.path.exists("sample_batch.csv"):
             with open("sample_batch.csv", "rb") as f:
                 st.download_button(
-                    label="⬇️ Download sample_batch.csv",
+                    label="Download sample_batch.csv",
                     data=f,
                     file_name="sample_batch.csv",
                     mime="text/csv",
@@ -380,7 +379,7 @@ elif app_mode == "📁 Batch CSV Inference":
             # Check features
             missing_vars = [f"var_{i}" for i in range(200) if f"var_{i}" not in batch_df.columns]
             if missing_vars:
-                st.error(f"❌ Uploaded CSV is missing required columns: {missing_vars[:5]}... (Total missing: {len(missing_vars)})")
+                st.error(f"Uploaded CSV is missing required columns: {missing_vars[:5]}... (Total missing: {len(missing_vars)})")
                 st.stop()
 
             # Process batch
@@ -395,7 +394,7 @@ elif app_mode == "📁 Batch CSV Inference":
                 results_df["Business_Decision"] = np.where(batch_preds == 1, "Target for Campaign", "Suppress")
 
             # KPI Summary Cards
-            st.markdown("### 📊 Batch Propensity Overview")
+            st.markdown("### Batch Propensity Overview")
             kpi1, kpi2, kpi3, kpi4 = st.columns(4)
             total_customers = len(batch_df)
             total_positives = int(np.sum(batch_preds == 1))
@@ -434,7 +433,7 @@ elif app_mode == "📁 Batch CSV Inference":
             # Download CSV
             csv_export = results_df.to_csv(index=False).encode("utf-8")
             st.download_button(
-                label="⬇️ Download Scored Customer Predictions (CSV)",
+                label="Download Scored Customer Predictions (CSV)",
                 data=csv_export,
                 file_name="scored_customer_predictions.csv",
                 mime="text/csv",
@@ -449,10 +448,10 @@ elif app_mode == "📁 Batch CSV Inference":
 # ==============================================================================
 # 7. TAB 3: MODEL ANALYTICS & VISUALIZATIONS
 # ==============================================================================
-elif app_mode == "📊 Model Analytics & ROC-AUC":
+elif app_mode == "Model Analytics & ROC-AUC":
     st.markdown("""
     <div class="hero-header">
-        <h2 style='margin:0; padding:0; color:#F8FAFC;'>📊 Model Performance, Diagnostics & Feature Importance</h2>
+        <h2 style='margin:0; padding:0; color:#F8FAFC;'>Model Performance, Diagnostics & Feature Importance</h2>
         <p style='margin:5px 0 0 0; color:#94A3B8;'>
             Comprehensive evaluation metrics, ROC-AUC discriminative benchmarking, confusion matrices, and feature attribution.
         </p>
@@ -522,9 +521,9 @@ elif app_mode == "📊 Model Analytics & ROC-AUC":
         plt.close(fig)
         
         if "0.50" in cm_view:
-            st.error("⚠️ Notice the high False Negatives at θ=0.50: ~75% of actual transactions are missed!")
+            st.error("Notice the high False Negatives at θ=0.50: ~75% of actual transactions are missed!")
         else:
-            st.success("✅ At θ=0.22, False Negatives drop dramatically, maximizing total captured business value.")
+            st.success("At θ=0.22, False Negatives drop dramatically, maximizing total captured business value.")
 
     st.markdown("---")
     st.subheader("Benchmark Comparison Across 4 ML Paradigms")
@@ -567,10 +566,10 @@ elif app_mode == "📊 Model Analytics & ROC-AUC":
 # ==============================================================================
 # 8. TAB 4: TECHNICAL ARCHITECTURE & REPORT
 # ==============================================================================
-elif app_mode == "📑 Technical Architecture & Report":
+elif app_mode == "Technical Architecture & Report":
     st.markdown("""
     <div class="hero-header">
-        <h2 style='margin:0; padding:0; color:#F8FAFC;'>📑 Comprehensive Technical Report (PRCP-1003)</h2>
+        <h2 style='margin:0; padding:0; color:#F8FAFC;'>Comprehensive Technical Report (PRCP-1003)</h2>
         <p style='margin:5px 0 0 0; color:#94A3B8;'>
             Deep dive into data pathologies, mathematical solutions, and production deployment justifications.
         </p>
